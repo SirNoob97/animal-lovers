@@ -1,13 +1,13 @@
 spring:
   datasource:
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-    url: jdbc:tc:postgresql:12.8:///animal_lovers?TC_INITSCRIPT=db/init.sql
+    url: jdbc:tc:postgresql:${IMAGE_TAG:12.8-alpine}:///${DB_NAME:animal_lovers}?TC_INITSCRIPT=db/init.sql
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD:12345}
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate:
