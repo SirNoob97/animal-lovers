@@ -8,7 +8,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import com.sirnoob97.github.users.domain.animal.Animal;
@@ -21,6 +24,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,16 +48,7 @@ class UserRepositoryTest {
   public void setUp() {
     staticAnimal = new Animal(randomString());
     staticAnimalList = Set.of(staticAnimal);
-    //@formatter:off
-    staticUser = User.builder().id(randomString())
-                                .given(randomString())
-                                .surname(randomString())
-                                .age(randomInteger())
-                                .points(randomInteger())
-                                .isActive(randomBoolean())
-                                .animals(staticAnimalList)
-                                .build();
-    //@formatter:on
+    staticUser = buildUser();
 
     assertNotNull(staticUser);
     assertNotNull(staticAnimalList);
@@ -89,8 +84,9 @@ class UserRepositoryTest {
   }
 
   @Test
-  public void findByAnimalOrderByPoints_ReturnAPageOfTenUsers_WhenSuccessful() {
+  public void findByAnimalOrderByPoints_ReturnAPageOfTenUsers_WhenUsersAreActive() {
     animalRepository.save(staticAnimal);
+    staticUser.setIsActive(true);
     userRepository.save(staticUser);
     var users = userRepository.findByAnimalOrderByPoints(staticAnimal, PageRequest.of(0, 10));
 
@@ -104,5 +100,78 @@ class UserRepositoryTest {
 
     assertThatExceptionOfType(InvalidDataAccessApiUsageException.class)
         .isThrownBy(() -> userRepository.findByAnimalOrderByPoints(staticAnimal, PageRequest.of(0, 10)));
+  }
+
+  @Test
+  public void deleByUserId_RemoveAUser_WhenSuccesful() {
+    var id = userRepository.save(staticUser).getUserId();
+
+    assertDoesNotThrow(() -> userRepository.deleteById(id));
+    assertFalse(userRepository.findById(id).isPresent());
+  }
+
+  @Test
+  public void deleByUserId_ThrowInvalidDataAccessApiUsageException_WhenIdIsNull() {
+    assertThatExceptionOfType(InvalidDataAccessApiUsageException.class)
+        .isThrownBy(() -> userRepository.deleteById(null));
+  }
+
+  @Test
+  public void deleByUserId_ThrowEmptyResultDataAccessException_WhenUserIsNotFoundUsingANegativeId() {
+    assertThatExceptionOfType(EmptyResultDataAccessException.class).isThrownBy(() -> userRepository.deleteById(-1L));
+  }
+
+  @Test
+  public void findAllOrderByPointsDesc_ReturnAPageOfUser_WhenSuccessful() {
+    userRepository.save(buildUser());
+    userRepository.save(buildUser());
+    userRepository.save(buildUser());
+    userRepository.save(buildUser());
+    userRepository.save(buildUser());
+
+    var users = userRepository.findAllByOrderByPointsDesc(PageRequest.of(0, 10));
+
+    assertFalse(users.isEmpty());
+
+    var points = users.map(u -> u.getPoints()).getContent();
+
+    assertTrue(isSorted(points));
+  }
+
+  @Test
+  public void findAllOrderByPointsDesc_ReturnAnEmptyPageOfUser_WhenDBIsEmpty() {
+    var users = userRepository.findAllByOrderByPointsDesc(PageRequest.of(0, 10));
+
+    assertTrue(users.isEmpty());
+  }
+
+  public static boolean isSorted(List<Integer> list) {
+    if (list.size() == 1) {
+      return true;
+    }
+
+    Iterator<Integer> iter = list.iterator();
+    Integer current, previous = iter.next();
+    while (iter.hasNext()) {
+      current = iter.next();
+      if (previous.compareTo(current) < 0) {
+        return false;
+      }
+      previous = current;
+    }
+    return true;
+  }
+
+  private User buildUser() {
+    //@formatter:off
+    return User.builder().id(randomString())
+                         .given(randomString())
+                         .surname(randomString())
+                         .age(randomInteger())
+                         .points(randomInteger())
+                         .isActive(randomBoolean())
+                         .animals(staticAnimalList)
+                         .build();
+    //@formatter:on
   }
 }
