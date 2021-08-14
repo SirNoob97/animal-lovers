@@ -26,7 +26,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,9 +36,9 @@ public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(insertable = false, updatable = false)
+  @Column(name = "user_id", insertable = false, updatable = false)
   @Setter(value = AccessLevel.NONE)
-  private Long user_id;
+  private Long userId;
 
   @Column(nullable = false, unique = true)
   private String id;
@@ -63,9 +62,8 @@ public class User {
   @ToString.Exclude
   @JsonIgnoreProperties("users")
   @ManyToMany
-  @JoinTable(name = "users_animals", joinColumns = {
-    @JoinColumn(name = "fk_user")    
-  }, inverseJoinColumns = {@JoinColumn(name ="fk_animal")})
+  @JoinTable(name = "users_animals", joinColumns = { @JoinColumn(name = "fk_user") }, inverseJoinColumns = {
+      @JoinColumn(name = "fk_animal") })
   private Set<Animal> animals;
 
   @JsonProperty("name")
