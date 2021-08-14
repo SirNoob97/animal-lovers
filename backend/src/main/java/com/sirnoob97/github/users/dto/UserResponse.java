@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserResponse {
 
+  private Long userId;
   private String given;
   private String surname;
   private Integer points;
