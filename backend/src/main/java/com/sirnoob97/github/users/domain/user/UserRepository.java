@@ -1,5 +1,7 @@
 package com.sirnoob97.github.users.domain.user;
 
+import javax.transaction.Transactional;
+
 import com.sirnoob97.github.users.domain.animal.Animal;
 import com.sirnoob97.github.users.dto.UserResponse;
 
@@ -19,5 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
   @Query(value = "SELECT new com.sirnoob97.github.users.dto.UserResponse(u.userId, u.given, u.surname, u.points, u.age) FROM User u ORDER BY u.points DESC")
   Page<UserResponse> findAllByOrderByPointsDesc(Pageable page);
 
+  @Transactional
   void deleteByUserId(Long userId);
 }
