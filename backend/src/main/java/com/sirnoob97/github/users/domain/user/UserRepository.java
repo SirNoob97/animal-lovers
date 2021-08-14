@@ -11,8 +11,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-  @Query(value = "SELECT new com.sirnoob97.github.users.dto.UserResponse(u.given, u.surname, u.points, u.age) FROM User u WHERE :animal MEMBER u.animals ORDER BY u.points DESC")
+  @Query(value = "SELECT new com.sirnoob97.github.users.dto.UserResponse(u.userId, u.given, u.surname, u.points, u.age) FROM User u WHERE :animal MEMBER u.animals AND u.isActive = true ORDER BY u.points DESC")
   Page<UserResponse> findByAnimalOrderByPoints(@Param("animal") Animal animal, Pageable page);
 }
