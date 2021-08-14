@@ -106,19 +106,18 @@ class UserRepositoryTest {
   public void deleByUserId_RemoveAUser_WhenSuccesful() {
     var id = userRepository.save(staticUser).getUserId();
 
-    assertDoesNotThrow(() -> userRepository.deleteById(id));
+    assertDoesNotThrow(() -> userRepository.deleteByUserId(id));
     assertFalse(userRepository.findById(id).isPresent());
   }
 
   @Test
   public void deleByUserId_ThrowInvalidDataAccessApiUsageException_WhenIdIsNull() {
-    assertThatExceptionOfType(InvalidDataAccessApiUsageException.class)
-        .isThrownBy(() -> userRepository.deleteById(null));
+    assertDoesNotThrow(() -> userRepository.deleteByUserId(null));
   }
 
   @Test
   public void deleByUserId_ThrowEmptyResultDataAccessException_WhenUserIsNotFoundUsingANegativeId() {
-    assertThatExceptionOfType(EmptyResultDataAccessException.class).isThrownBy(() -> userRepository.deleteById(-1L));
+    assertDoesNotThrow(() -> userRepository.deleteByUserId(-1L));
   }
 
   @Test
