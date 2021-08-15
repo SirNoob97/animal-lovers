@@ -41,14 +41,13 @@ const useForm = (callback, validate) => {
 
   useEffect(
     () => {
-      console.log('effect')
-      console.log(Object.values(errors).length)
       if (Object.keys(errors).length === 0 && isSubmitting) {
         callback();
       }
     },
     [errors]
   );
+ // ****** console.log(values)
   return { handleChange, handleNameChange, handleSubmit, values, errors };
 };
 
