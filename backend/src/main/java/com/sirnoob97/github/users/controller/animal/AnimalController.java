@@ -1,5 +1,6 @@
 package com.sirnoob97.github.users.controller.animal;
 
+import com.sirnoob97.github.users.domain.animal.Animal;
 import com.sirnoob97.github.users.domain.animal.AnimalRepository;
 
 import org.springframework.data.domain.Page;
@@ -19,7 +20,7 @@ public class AnimalController {
   private AnimalRepository animalRepository;
 
   @GetMapping
-  public ResponseEntity<Page<String>> getUsers(Pageable page){
-    return ResponseEntity.ok(animalRepository.findAll(page).map(a -> a.getName()));
+  public ResponseEntity<Page<Animal>> getUsers(Pageable page){
+    return ResponseEntity.ok(animalRepository.findAll(page));
   }
 }
