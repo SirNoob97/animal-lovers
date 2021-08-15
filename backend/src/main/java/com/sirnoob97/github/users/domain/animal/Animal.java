@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sirnoob97.github.users.domain.user.User;
 
 import lombok.AllArgsConstructor;
@@ -35,7 +35,7 @@ public class Animal {
 
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
-  @JsonIgnoreProperties("animals")
+  @JsonIgnore
   @ManyToMany(mappedBy = "animals")
   private Set<User> users;
 
