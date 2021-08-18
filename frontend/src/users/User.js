@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const User = (values) => {
-  const startIndex = (values.page - 1) * values.size;
-  const selectedUsers = values.users.slice(startIndex, startIndex + values.size);
-
+const User = (users) => {
   return (
     <tbody>
       {
-        selectedUsers.map(user => (
+        users.map(user => (
           <tr key={user.userId}>
             <td>{user.given}</td>
             <td>{user.surname}</td>
