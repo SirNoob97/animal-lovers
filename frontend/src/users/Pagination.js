@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import ReactPaginate from 'react-paginate';
-import UserTable from './UserTable';
+import React from 'react';
 
-const Pagination = ({ totalPages, handleClick }) => {
+const Pagination = ({ totalPages, totalElements, incrementPageNumber, incrementUserPerPage }) => {
   const pages = [...Array(totalPages).keys()].map(num => num + 1);
   return (
     <div>
       {pages.map(num => (
-        <button key={num} onClick={() => handleClick(num)}>
+        <button key={num} onClick={() => incrementPageNumber(num)}>
           {num}
         </button>
       ))}
+      <button onClick={() => incrementUserPerPage()}>
+        Show More
+      </button>
     </div>
   )
 }
