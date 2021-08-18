@@ -1,38 +1,39 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
 import Table from 'react-bootstrap/Table';
-import User from './User';
+import { useParams } from 'react-router-dom';
 import Pagination from './Pagination';
+import UrlRequest from './UrlRequest';
+import User from './User';
 
 const axios = require('axios');
-const url = 'http://localhost:8080/users';
-const animalParam = '?animal=';
-const points = '/points?';
-
-const page = 'page=';
-const size = '&size=';
 
 const UserTable = () => {
-  const { animal } = useParams();
-  let urlRequest = checkPath(animal);
   const [users, setUsers] = useState([]);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  let usersPerPage = 100;
+  const { animal } = useParams();
 
-  urlRequest += page + pageNumber + size + usersPerPage;
-  usersPerPage = 10;
+  let { urlRequest, incrementPageNumb, incrementUsersPerPage } = UrlRequest(animal);
+
+  let totalPages = 0;
+  let totalElements = 0;
+
+  const setTotalElements = (num) => {
+    totalElements = num;
+  };
+  const setTotalPages = (num) => {
+    totalElements = num;
+  };
 
   React.useEffect(async () => {
     const res = await axios.get(urlRequest);
     setUsers(res.data.content);
 
     setTotalPages(res.data.totalPages);
+    setTotalElements(res.data.totalElements);
+    console.log('res:',res)
   }, []);
 
-  const handleClick = num => {
-    setPageNumber(num);
-  };
+
+  console.log('users:', users)
 
   return (
     <div>
@@ -46,22 +47,11 @@ const UserTable = () => {
             <th>Delete</th>
           </tr>
         </thead>
-        <User users={users} page={pageNumber} size={usersPerPage} />
+        <User users={users} />
       </Table>
-      <Pagination totalPages={totalPages} handleClick={handleClick} />
+      <Pagination totalPages={totalPages} totalElements={totalElements} incrementPageNumber={incrementPageNumb} incrementUserPerPage={incrementUsersPerPage} />
     </div>
   )
 }
 
-function checkPath(animal) {
-  let urlRequest = url;
-
-  if (animal && animal.length > 0) {
-    urlRequest += animalParam + animal + '&';
-  } else {
-    urlRequest += points;
-  }
-  return urlRequest;
-}
-
-export default UserTable
+export default UserTable;
