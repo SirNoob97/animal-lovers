@@ -1,6 +1,6 @@
 import React from 'react';
 
-const User = (users) => {
+const User = ({ users }) => {
   return (
     <tbody>
       {
