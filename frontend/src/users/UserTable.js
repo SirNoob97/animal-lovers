@@ -1,39 +1,53 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { useParams } from 'react-router-dom';
-import Pagination from './Pagination';
-import UrlRequest from './UrlRequest';
+import PaginationBar from './Pagination';
 import User from './User';
 
 const axios = require('axios');
 
 const UserTable = () => {
-  const [users, setUsers] = useState([]);
+  const url = 'http://localhost:8080/users';
+  let urlRequest = '';
   const { animal } = useParams();
 
-  let { urlRequest, incrementPageNumb, incrementUsersPerPage } = UrlRequest(animal);
+  const [users, setUsers] = useState([]);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [usersPerPage, setUsersPerPage] = useState(10);
+  const [totalPages, setTotalPages] = useState(0);
 
-  let totalPages = 0;
-  let totalElements = 0;
+  const page = `page=${pageNumber}&size=${usersPerPage}`;
+  const animalParam = `?animal=${animal}&${page}`;
+  const points = `/points?${page}`;
 
-  const setTotalElements = (num) => {
-    totalElements = num;
+
+  if (animal && animal.length > 0) {
+    urlRequest = url + animalParam;
+  } else {
+    urlRequest = url + points;
+  }
+
+  const incrementPageNumber = (num) => {
+    setPageNumber(num);
   };
-  const setTotalPages = (num) => {
-    totalElements = num;
-  };
 
-  React.useEffect(async () => {
-    const res = await axios.get(urlRequest);
-    setUsers(res.data.content);
+  const incrementUsersPerPage = () => {
+    setUsersPerPage(25);
+  }
 
-    setTotalPages(res.data.totalPages);
-    setTotalElements(res.data.totalElements);
-    console.log('res:',res)
-  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(urlRequest);
+      setUsers(res.data.content);
+      setTotalPages(res.data.totalPages);
+    };
 
+    fetchData();
+  }, [urlRequest]);
 
-  console.log('users:', users)
+  if (users.length === 0) {
+    return 'loading...';
+  }
 
   return (
     <div>
@@ -49,7 +63,7 @@ const UserTable = () => {
         </thead>
         <User users={users} />
       </Table>
-      <Pagination totalPages={totalPages} totalElements={totalElements} incrementPageNumber={incrementPageNumb} incrementUserPerPage={incrementUsersPerPage} />
+      <PaginationBar currentPage={pageNumber} totalPages={totalPages} incrementPageNumber={incrementPageNumber} incrementUserPerPage={incrementUsersPerPage} />
     </div>
   )
 }
