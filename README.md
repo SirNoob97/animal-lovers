@@ -10,4 +10,4 @@
 
 - [sudo] docker-compose up -d
 - [mvn | ./mvnw | mvnw.cmd] spring-boot:run (depends of OS)
-- npm start
+- yarn run start
