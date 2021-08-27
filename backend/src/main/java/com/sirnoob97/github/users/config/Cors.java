@@ -1,4 +1,4 @@
-package com.sirnoob97.github.users.cognfig;
+package com.sirnoob97.github.users.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
