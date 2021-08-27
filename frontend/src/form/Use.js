@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+
+const url = 'http://localhost:8080/users'
 
 const useForm = (callback, validate) => {
-  const [values, setValues] = useState({
+  const [user, setUser] = useState({
     name: {
       given: '',
       surname: ''
@@ -16,8 +19,8 @@ const useForm = (callback, validate) => {
 
   const handleChange = e => {
     const { name, value } = e.target;
-    setValues({
-      ...values,
+    setUser({
+      ...user,
       [name]: value
     });
   };
@@ -25,8 +28,8 @@ const useForm = (callback, validate) => {
   const handleNameChange = (e, obj) => {
     const { name, value } = e.target;
     obj[name] = value;
-    setValues({
-      ...values,
+    setUser({
+      ...user,
       name: obj
     });
   };
@@ -34,20 +37,25 @@ const useForm = (callback, validate) => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    setErrors(validate(values));
+    setErrors(validate(user));
     setIsSubmitting(true);
   };
 
   useEffect(
-    () => {
+    async () => {
+      let res = {};
       if (Object.keys(errors).length === 0 && isSubmitting) {
+        res = await axios.post(url, user);
+        console.log(res)
+      }
+
+      if (res.status >= 200 && res.status < 400) {
         callback();
       }
     },
     [errors]
   );
- // ****** console.log(values)
-  return { handleChange, handleNameChange, handleSubmit, values, errors };
+  return { handleChange, handleNameChange, handleSubmit, user, errors };
 };
 
 export default useForm;
