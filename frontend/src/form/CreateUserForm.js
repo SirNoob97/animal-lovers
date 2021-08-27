@@ -3,7 +3,7 @@ import useForm from './Use';
 import validate from './Validate';
 
 const CreateUserForm = ({ createUserForm }) => {
-  const { handleChange, handleNameChange, handleSubmit, values, errors } = useForm(
+  const { handleChange, handleNameChange, handleSubmit, user, errors } = useForm(
     createUserForm,
     validate
   );
@@ -22,8 +22,8 @@ const CreateUserForm = ({ createUserForm }) => {
               type='text'
               name='given'
               placeholder='First name'
-              value={values.name.given}
-              onChange={event => handleNameChange(event, values.name)}
+              value={user.name.given}
+              onChange={event => handleNameChange(event, user.name)}
             />
             {errors.name && <p className='text-danger'>{errors.name.given}</p>}
           </div>
@@ -34,8 +34,8 @@ const CreateUserForm = ({ createUserForm }) => {
               type='text'
               name='surname'
               placeholder='Surname'
-              value={values.name.surname}
-              onChange={event => handleNameChange(event, values.name)}
+              value={user.name.surname}
+              onChange={event => handleNameChange(event, user.name)}
             />
             {errors.name && <p className='text-danger'>{errors.name.surname}</p>}
           </div>
@@ -46,7 +46,7 @@ const CreateUserForm = ({ createUserForm }) => {
               type='numer'
               name='age'
               placeholder='Age'
-              value={values.age}
+              value={user.age}
               onChange={handleChange}
             />
             {errors.age && <p className='text-danger'>{errors.age}</p>}
@@ -58,13 +58,14 @@ const CreateUserForm = ({ createUserForm }) => {
               type='numer'
               name='points'
               placeholder='Points'
-              value={values.points}
+              value={user.points}
               onChange={handleChange}
             />
             {errors.points && <p className='text-danger'>{errors.points}</p>}
           </div>
           <div className='position-relative top-100 start-50 translate-middle-x w-50'>
-            <button className='position-relative top-100 start-50 translate-middle-x mb-3 btn btn-primary' type='submit'>
+            <button className='position-relative top-100 start-50 translate-middle-x mb-3 btn btn-primary'
+                    type='submit'>
               Create
             </button>
           </div>
