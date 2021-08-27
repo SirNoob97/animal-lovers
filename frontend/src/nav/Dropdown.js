@@ -15,7 +15,7 @@ function Dropdown() {
   }, []);
 
   return (
-    <NavDropdown title="Animals" id="basic-nav-dropdown">
+    <NavDropdown className="fs-4" title="Animals" id="basic-nav-dropdown">
       <div>{
         animals.map(animal => (
           <li key={animal.id}>
