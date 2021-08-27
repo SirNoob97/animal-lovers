@@ -1,10 +1,9 @@
 import React from 'react';
-import './Form.css';
 
 const Success = () => {
   return (
-    <div className='form-content'>
-      <h1 className='form-success'>We have received your request!</h1>
+    <div className='position-absolute top-50 start-50 translate-middle text-light'>
+      <h1>We have received your request!</h1>
     </div>
   );
 };
