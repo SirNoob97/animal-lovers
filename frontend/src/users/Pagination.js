@@ -1,47 +1,32 @@
-import React from 'react';
-import Pagination from 'react-bootstrap/Pagination'
+import React, {useState} from 'react';
+import Pagination from 'react-js-pagination';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-const PaginationBar = ({ currentPage, totalPages, incrementPageNumber, incrementUserPerPage }) => {
-  const initialPage = 1;
-  const firstPage = currentPage + 1;
-  const secondPage = firstPage + 1;
-  const thirdPage = secondPage + 1;
+const PaginationBar = ({ currentPage, totalUsers, changePageNumber, changeUsersPerPage }) => {
+  const [ usersPerPage, setUsersPerPage ]= useState(10);
   return (
-    <div>
-      <Pagination>
-        <Pagination.First onClick={() => incrementPageNumber(initialPage)} />
-        <Pagination.Prev onClick={() => incrementPageNumber(currentPage - 1)} />
-        <Pagination.Item onClick={() => incrementPageNumber(initialPage)}>{currentPage > 1 ? initialPage : ''}</Pagination.Item>
-        <Pagination.Ellipsis />
+    <div className='nav justify-content-center'>
+      <div className='nav-item'>
+        {
+          (usersPerPage === 10)
+          ? (<button type="button" className="btn btn-outline-primary" onClick={() => { setUsersPerPage(25); changeUsersPerPage(25);}}>Show more</button>)
+          : (<button type="button" className="btn btn-outline-primary" onClick={() => {setUsersPerPage(10); changeUsersPerPage(10)}}>Show less</button>)
+        }
+      </div>
 
-        <>
-          {
-            (firstPage === initialPage) ?
-              <Pagination.Item active>{firstPage}</Pagination.Item>
-              : <Pagination.Item onClick={() => incrementPageNumber(firstPage - 2)}>{firstPage - 2}</Pagination.Item>
-          }
-          {
-            (firstPage > initialPage) ?
-              <Pagination.Item active>{secondPage}</Pagination.Item>
-              : <Pagination.Item onClick={() => incrementPageNumber(secondPage)}>{secondPage}</Pagination.Item>
-          }
-          {
-            (thirdPage > totalPages) ?
-              <Pagination.Item disabled>{thirdPage}</Pagination.Item>
-              : <Pagination.Item onClick={() => incrementPageNumber(thirdPage)}>{thirdPage}</Pagination.Item>
-          }
-        </>
-        <Pagination.Ellipsis />
-        <Pagination.Item>
-          {((currentPage + 10) <= totalPages) ?
-            (currentPage + 10)
-            : totalPages
-          }</Pagination.Item>
-        <Pagination.Next onClick={() => incrementPageNumber(currentPage + 1)} />
-        <Pagination.Last onClick={() => incrementPageNumber(totalPages)} />
-        <Pagination.Item onClick={() => incrementUserPerPage()}>Show More</Pagination.Item>
-      </Pagination>
-    </div >
+      <div className='nav-item'>
+        <Pagination
+          activePage={currentPage}
+          itemsCountPerPage={usersPerPage}
+          totalItemsCount={totalUsers}
+          pageRangeDisplayed={5}
+          onChange={(pageNumber) => changePageNumber(pageNumber)}
+
+          itemClass='page-item'
+          linkClass='page-link'
+        />
+      </div>
+    </div>
   )
 }
 
