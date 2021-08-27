@@ -12,11 +12,11 @@ const UserTable = () => {
   const { animal } = useParams();
 
   const [users, setUsers] = useState([]);
-  const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
-  const [totalPages, setTotalPages] = useState(0);
+  const [totalUsers, setTotalUsers] = useState(0);
 
-  const page = `page=${pageNumber}&size=${usersPerPage}`;
+  const page = `page=${pageNumber - 1}&size=${usersPerPage}`;
   const animalParam = `?animal=${animal}&${page}`;
   const points = `/points?${page}`;
 
@@ -27,19 +27,19 @@ const UserTable = () => {
     urlRequest = url + points;
   }
 
-  const incrementPageNumber = (num) => {
+  const changePageNumber = (num) => {
     setPageNumber(num);
   };
 
-  const incrementUsersPerPage = () => {
-    setUsersPerPage(25);
+  const changeUsersPerPage = (num) => {
+    setUsersPerPage(num);
   }
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(urlRequest);
       setUsers(res.data.content);
-      setTotalPages(res.data.totalPages);
+      setTotalUsers(res.data.totalElements);
     };
 
     fetchData();
@@ -63,7 +63,7 @@ const UserTable = () => {
         </thead>
         <User users={users} />
       </Table>
-      <PaginationBar currentPage={pageNumber} totalPages={totalPages} incrementPageNumber={incrementPageNumber} incrementUserPerPage={incrementUsersPerPage} />
+      <PaginationBar currentPage={pageNumber} totalUsers={totalUsers} changePageNumber={changePageNumber} changeUsersPerPage={changeUsersPerPage} />
     </div>
   )
 }
