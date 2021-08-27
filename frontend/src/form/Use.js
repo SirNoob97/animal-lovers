@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 const useForm = (callback, validate) => {
   const [values, setValues] = useState({
-    id: '',
     name: {
       given: '',
       surname: ''

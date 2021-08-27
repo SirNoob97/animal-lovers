@@ -16,18 +16,6 @@ const CreateUserForm = ({ createUserForm }) => {
           Animal Lover
         </h1>
         <div className='form-inputs'>
-          <label className='form-label'>Id</label>
-          <input
-            className='form-input'
-            type='text'
-            name='id'
-            placeholder='Enter the id'
-            value={values.id}
-            onChange={handleChange}
-          />
-          {errors.id && <p>{errors.id}</p>}
-        </div>
-        <div className='form-inputs'>
           <label className='form-label'>First name</label>
           <input
             className='form-input'

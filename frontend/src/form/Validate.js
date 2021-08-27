@@ -2,10 +2,6 @@ export default function validateInfo(values) {
   let name = {}
   let errors = {};
 
-  if (!values.id.trim()) {
-    errors.id = 'Id required';
-  }
-
   if (!values.name.given) {
     name.given = 'First Name is required';
     errors.name = name;
