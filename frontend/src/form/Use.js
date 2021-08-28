@@ -42,18 +42,19 @@ const useForm = (callback, validate) => {
   };
 
   useEffect(
-    async () => {
-      let res = {};
-      if (Object.keys(errors).length === 0 && isSubmitting) {
-        res = await axios.post(url, user);
-        console.log(res)
-      }
+    () => {
+      const fetchData = async () => {
+        const res = await axios.post(url, user);
+        if (res.status >= 200 && res.status < 400) {
+          callback();
+        }
+      };
 
-      if (res.status >= 200 && res.status < 400) {
-        callback();
+      if (Object.keys(errors).length === 0 && isSubmitting) {
+        fetchData();
       }
     },
-    [errors]
+    [callback, isSubmitting, user, errors]
   );
   return { handleChange, handleNameChange, handleSubmit, user, errors };
 };
