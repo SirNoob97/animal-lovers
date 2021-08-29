@@ -1,22 +1,28 @@
-export default function validateInfo(values) {
-  let name = {}
-  let errors = {};
+import User from './User';
+import UserErrors from './UserErrors';
+import UserName from './UserName';
 
-  if (!values.name.given) {
-    name.given = 'First Name is required';
-    errors.name = name;
+export default function validateInfo(user: User): UserErrors {
+  let userName = new UserName();
+  let errors = new UserErrors();
+
+  if (user.name !== undefined) {
+    if (!userName.given) {
+      userName.given = 'First Name is required';
+    }
+
+    if (!userName.surname) {
+      userName.surname = 'Surname is required';
+    }
+
+    errors.name = userName;
   }
 
-  if (!values.name.surname) {
-    name.surname = 'Surname is required';
-    errors.surname = name;
-  }
-
-  if (!values.age) {
+  if (!user.age) {
     errors.age = 'Age is required';
   }
 
-  if (!values.points) {
+  if (!user.points) {
     errors.points = 'Points is required';
   }
   return errors;
