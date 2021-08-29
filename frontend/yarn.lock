@@ -2644,6 +2644,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-js-pagination@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@types/react-js-pagination@npm:3.0.4"
+  dependencies:
+    "@types/react": "*"
+  checksum: c0a413b30bf158da43c446a620298709cbe3c6958d62cef48ba694ba32a4478af936c22a2ad359c29f1feff492c413dbf1b826abca9d379e81b0cdee74e1cc54
+  languageName: node
+  linkType: hard
+
 "@types/react-router-dom@npm:^5.1.8":
   version: 5.1.8
   resolution: "@types/react-router-dom@npm:5.1.8"
@@ -7125,6 +7134,7 @@ __metadata:
     "@types/node": ^12.0.0
     "@types/react": ^17.0.0
     "@types/react-dom": ^17.0.0
+    "@types/react-js-pagination": ^3.0.4
     "@types/react-router-dom": ^5.1.8
     axios: ^0.21.1
     bootstrap: ^5.1.0
