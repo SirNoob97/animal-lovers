@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import DBUser from './DBUser';
 import Table from 'react-bootstrap/Table';
 import { useParams } from 'react-router-dom';
 import PaginationBar from './Pagination';
 import User from './User';
-
-const axios = require('axios');
+import axios from 'axios';
 
 const UserTable = () => {
   const url = 'http://localhost:8080/users';
   let urlRequest = '';
-  const { animal } = useParams();
+  const animal: string = useParams();
 
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<DBUser[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [usersPerPage, setUsersPerPage] = useState(10);
   const [totalUsers, setTotalUsers] = useState(0);
@@ -27,11 +27,11 @@ const UserTable = () => {
     urlRequest = url + points;
   }
 
-  const changePageNumber = (num) => {
+  const changePageNumber = (num: number) => {
     setPageNumber(num);
   };
 
-  const changeUsersPerPage = (num) => {
+  const changeUsersPerPage = (num: number) => {
     setUsersPerPage(num);
   }
 
@@ -46,7 +46,7 @@ const UserTable = () => {
   }, [urlRequest]);
 
   if (users.length === 0) {
-    return 'loading...';
+    return <h1>'loading...'</h1>;
   }
 
   return (

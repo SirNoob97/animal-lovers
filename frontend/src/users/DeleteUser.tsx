@@ -1,7 +1,18 @@
 import React from 'react';
 import axios from 'axios';
 
-const DeleteUser = ({buttonState, changeButtonState, id, deletedUsers}) => {
+type DeleteProps = {
+  buttonState: boolean;
+  changeButtonState: (n: number) => void;
+  id: number;
+  deletedUsers: number[];
+}
+
+const DeleteUser: React.FC<DeleteProps> = ({buttonState,
+                    changeButtonState,
+                    id,
+                    deletedUsers}) => {
+
   let url = `http://localhost:8080/users/${id}`;
 
   const request = async () => {

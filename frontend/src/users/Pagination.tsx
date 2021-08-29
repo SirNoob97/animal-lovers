@@ -2,7 +2,14 @@ import React, {useState} from 'react';
 import Pagination from 'react-js-pagination';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const PaginationBar = ({ currentPage, totalUsers, changePageNumber, changeUsersPerPage }) => {
+type PaginationProps = {
+  currentPage: number;
+  totalUsers: number;
+  changePageNumber: (n: number) => void;
+  changeUsersPerPage: (n: number) => void;
+}
+
+const PaginationBar: React.FC<PaginationProps> = ({currentPage, totalUsers, changePageNumber, changeUsersPerPage}) => {
   const [ usersPerPage, setUsersPerPage ]= useState(10);
   return (
     <div className='nav justify-content-center'>
@@ -20,7 +27,7 @@ const PaginationBar = ({ currentPage, totalUsers, changePageNumber, changeUsersP
           itemsCountPerPage={usersPerPage}
           totalItemsCount={totalUsers}
           pageRangeDisplayed={5}
-          onChange={(pageNumber) => changePageNumber(pageNumber)}
+          onChange={(pageNumber: number) => changePageNumber(pageNumber)}
 
           itemClass='page-item'
           linkClass='page-link'
