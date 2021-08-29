@@ -1,12 +1,17 @@
 import React, {useState} from 'react';
+import DBUser from './DBUser';
 import DeleteUser from './DeleteUser';
 
-const User = ({ users }) => {
-  const [buttonState, setButtonState] = useState(false);
-  const [deletedUsers, setDeletedUsers ]= useState([]);
+type UserProps = {
+  users: DBUser[];
+}
 
-  const changeButtonState = (num) => {
-    setDeletedUsers((prevUsers) => [
+const User: React.FC<UserProps>= ({users}) => {
+  const [buttonState, setButtonState] = useState<boolean>(false);
+  const [deletedUsers, setDeletedUsers ]= useState<number[]>([]);
+
+  const changeButtonState = (num: number) => {
+    setDeletedUsers((prevUsers: number[]) => [
       ...prevUsers,
       num
     ]);
