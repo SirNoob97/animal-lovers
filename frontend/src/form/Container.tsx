@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import CreateUserForm from './CreateUserForm';
 import Success from './Success';
 

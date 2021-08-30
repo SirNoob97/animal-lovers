@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dropdown from './Dropdown';
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark mx-auto bg-dark">
