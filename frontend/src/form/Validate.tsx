@@ -7,11 +7,11 @@ export default function validateInfo(user: User): UserErrors {
   let errors = new UserErrors();
 
   if (user.name !== undefined) {
-    if (!userName.given) {
+    if (!user.name.given) {
       userName.given = 'First Name is required';
     }
 
-    if (!userName.surname) {
+    if (!user.name.surname) {
       userName.surname = 'Surname is required';
     }
 

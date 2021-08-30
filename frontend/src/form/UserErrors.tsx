@@ -6,7 +6,11 @@ export default class UserErrors{
   age?: string;
 
 
-  isEmpty(errors: UserErrors): boolean {
-    return Object.keys(errors).length === 0 ? true : false;
+  isUndefined(): boolean {
+    console.log(this)
+    return this.name?.given === undefined &&
+           this.name?.surname === undefined &&
+           this.points === undefined &&
+           this.age === undefined ? true : false;
   }
 }
