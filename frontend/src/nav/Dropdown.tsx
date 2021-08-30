@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const url = 'http://localhost:8080/animals';
 
-function Dropdown() {
+const Dropdown: React.FC = () => {
   const [animals, setAnimals] = useState<Animal[]>([]);
 
   React.useEffect(() => {
@@ -29,4 +29,4 @@ function Dropdown() {
   )
 }
 
-export default Dropdown
+export default Dropdown;

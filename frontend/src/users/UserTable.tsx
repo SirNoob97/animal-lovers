@@ -6,10 +6,12 @@ import PaginationBar from './Pagination';
 import User from './User';
 import axios from 'axios';
 
-const UserTable = () => {
+const UserTable: React.FC = () => {
   const url = 'http://localhost:8080/users';
   let urlRequest = '';
-  const animal: string = useParams();
+  const {animal} = useParams() as {
+    animal: string
+  };
 
   const [users, setUsers] = useState<DBUser[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
@@ -21,7 +23,7 @@ const UserTable = () => {
   const points = `/points?${page}`;
 
 
-  if (animal && animal.length > 0) {
+  if ({animal}.animal && {animal}.animal.length > 0) {
     urlRequest = url + animalParam;
   } else {
     urlRequest = url + points;
