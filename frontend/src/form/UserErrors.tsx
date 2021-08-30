@@ -7,7 +7,6 @@ export default class UserErrors{
 
 
   isUndefined(): boolean {
-    console.log(this)
     return this.name?.given === undefined &&
            this.name?.surname === undefined &&
            this.points === undefined &&
