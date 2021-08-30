@@ -6,8 +6,16 @@ import axios from 'axios';
 
 const url = 'http://localhost:8080/users'
 
+const emptyUser = ():User => {
+    const user = new User();
+    user.name = new UserName();
+    user.animals = [];
+    user.isActive = true;
+    return user;
+  }
+
 const useForm = (callback: () => void, validate: (u: User) => UserErrors) => {
-  const [user, setUser] = useState<User>(new User());
+  const [user, setUser] = useState<User>(emptyUser());
   const [errors, setErrors] = useState<UserErrors>(new UserErrors());
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -21,8 +29,12 @@ const useForm = (callback: () => void, validate: (u: User) => UserErrors) => {
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>, obj: UserName) => {
     const { name, value } = e.target;
-    console.log(e.target)
-    obj[name] = value;
+    if (name === 'given'){
+      obj.given = value;
+    } else {
+      obj.surname = value;
+    }
+
     setUser({
       ...user,
       name: obj
@@ -45,7 +57,7 @@ const useForm = (callback: () => void, validate: (u: User) => UserErrors) => {
         }
       };
 
-      if (Object.keys(errors).length === 0 && isSubmitting) {
+      if (errors.isUndefined() && isSubmitting) {
         fetchData();
       }
     },
