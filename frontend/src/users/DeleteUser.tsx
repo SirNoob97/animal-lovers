@@ -1,4 +1,5 @@
 import React from 'react';
+import Envs from '../util/Envs';
 import axios from 'axios';
 
 type DeleteProps = {
@@ -8,15 +9,17 @@ type DeleteProps = {
   deletedUsers: number[];
 }
 
+const url = (Envs.BACKEND_URL || Envs.DEFAULT_BACKEND_URL) + Envs.USERS_ENDPOINT;
+
 const DeleteUser: React.FC<DeleteProps> = ({buttonState,
                     changeButtonState,
                     id,
                     deletedUsers}) => {
 
-  let url = `http://localhost:8080/users/${id}`;
+  let endpoint = `${url}/${id}`;
 
   const request = async () => {
-    const res = await axios.delete(url)
+    const res = await axios.delete(endpoint)
     
     if (res.status >= 200 && res.status < 400){
       changeButtonState(id);

@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Animal from './Animal';
 import axios from 'axios';
+import Envs from '../util/Envs'
 
-const url = 'http://localhost:8080/animals';
+const url = (Envs.BACKEND_URL || Envs.DEFAULT_BACKEND_URL) + Envs.ANIMALS_ENDPOINT;
 
 const Dropdown: React.FC = () => {
+  console.log(url)
   const [animals, setAnimals] = useState<Animal[]>([]);
 
   React.useEffect(() => {

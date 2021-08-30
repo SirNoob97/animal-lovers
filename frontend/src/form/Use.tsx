@@ -2,9 +2,10 @@ import { useEffect, useState, ChangeEvent } from 'react';
 import User from './User';
 import UserName from './UserName';
 import UserErrors from './UserErrors';
+import Envs from '../util/Envs'
 import axios from 'axios';
 
-const url = 'http://localhost:8080/users'
+const url: string = (Envs.BACKEND_URL || Envs.DEFAULT_BACKEND_URL) + Envs.USERS_ENDPOINT;
 
 const emptyUser = ():User => {
     const user = new User();

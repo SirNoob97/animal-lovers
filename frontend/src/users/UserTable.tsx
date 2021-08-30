@@ -4,10 +4,11 @@ import Table from 'react-bootstrap/Table';
 import { useParams } from 'react-router-dom';
 import PaginationBar from './Pagination';
 import User from './User';
+import Envs from '../util/Envs';
 import axios from 'axios';
 
 const UserTable: React.FC = () => {
-  const url = 'http://localhost:8080/users';
+  const url = (Envs.BACKEND_URL || Envs.DEFAULT_BACKEND_URL) + Envs.USERS_ENDPOINT;
   let urlRequest = '';
   const {animal} = useParams() as {
     animal: string
