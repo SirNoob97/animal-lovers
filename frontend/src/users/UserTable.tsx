@@ -8,10 +8,11 @@ import Envs from '../util/Envs';
 import axios from 'axios';
 
 const UserTable: React.FC = () => {
-  const url = (Envs.BACKEND_URL || Envs.DEFAULT_BACKEND_URL) + Envs.USERS_ENDPOINT;
+  const url =
+    (Envs.BACKEND_URL || Envs.DEFAULT_BACKEND_URL) + Envs.USERS_ENDPOINT;
   let urlRequest = '';
-  const {animal} = useParams() as {
-    animal: string
+  const { animal } = useParams() as {
+    animal: string;
   };
 
   const [users, setUsers] = useState<DBUser[]>([]);
@@ -23,8 +24,7 @@ const UserTable: React.FC = () => {
   const animalParam = `?animal=${animal}&${page}`;
   const points = `/points?${page}`;
 
-
-  if ({animal}.animal && {animal}.animal.length > 0) {
+  if ({ animal }.animal && { animal }.animal.length > 0) {
     urlRequest = url + animalParam;
   } else {
     urlRequest = url + points;
@@ -36,7 +36,7 @@ const UserTable: React.FC = () => {
 
   const changeUsersPerPage = (num: number) => {
     setUsersPerPage(num);
-  }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,7 +54,7 @@ const UserTable: React.FC = () => {
 
   return (
     <div>
-      <Table responsive striped bordered >
+      <Table responsive striped bordered>
         <thead>
           <tr>
             <th>Fist Name</th>
@@ -66,9 +66,14 @@ const UserTable: React.FC = () => {
         </thead>
         <User users={users} />
       </Table>
-      <PaginationBar currentPage={pageNumber} totalUsers={totalUsers} changePageNumber={changePageNumber} changeUsersPerPage={changeUsersPerPage} />
+      <PaginationBar
+        currentPage={pageNumber}
+        totalUsers={totalUsers}
+        changePageNumber={changePageNumber}
+        changeUsersPerPage={changeUsersPerPage}
+      />
     </div>
-  )
-}
+  );
+};
 
 export default UserTable;

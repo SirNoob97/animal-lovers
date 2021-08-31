@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv';
 
-dotenv.config({path : './../../..env.development'})
+dotenv.config({ path: './../../..env.development' });
 
 interface Variables {
   readonly DEFAULT_BACKEND_URL: string;
@@ -10,10 +10,10 @@ interface Variables {
 }
 
 const Envs: Variables = {
-  DEFAULT_BACKEND_URL : `${process.env.REACT_APP_DEFAULT_BACKEND_URL}`,
-  BACKEND_URL : `${process.env.REACT_APP_BACKEND_URL}`,
-  USERS_ENDPOINT : `${process.env.REACT_APP_BACKEND_USERS_ENDPOINT}`,
-  ANIMALS_ENDPOINT : `${process.env.REACT_APP_BACKEND_ANIMALS_ENDPOINT}`
-}
+  DEFAULT_BACKEND_URL: `${process.env.REACT_APP_DEFAULT_BACKEND_URL}`,
+  BACKEND_URL: `${process.env.REACT_APP_BACKEND_URL}`,
+  USERS_ENDPOINT: `${process.env.REACT_APP_BACKEND_USERS_ENDPOINT}`,
+  ANIMALS_ENDPOINT: `${process.env.REACT_APP_BACKEND_ANIMALS_ENDPOINT}`,
+};
 
 export default Envs;

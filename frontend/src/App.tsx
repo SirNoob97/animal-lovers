@@ -8,8 +8,12 @@ function App() {
     <Router>
       <Navbar />
       <Switch>
-        <Route path='/create-user' exact component={FormContainer} />
-        <Route path={['/users', '/users/:animal']} exact component={UserTable} />
+        <Route path="/create-user" exact component={FormContainer} />
+        <Route
+          path={['/users', '/users/:animal']}
+          exact
+          component={UserTable}
+        />
       </Switch>
     </Router>
   );
