@@ -37,7 +37,7 @@ public class User {
   @Setter(value = AccessLevel.NONE)
   private Long userId;
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false, insertable = false, unique = true)
   private String id;
 
   @Column(length = 64, nullable = false)
