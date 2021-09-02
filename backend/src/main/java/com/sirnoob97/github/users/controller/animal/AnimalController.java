@@ -18,7 +18,7 @@ public class AnimalController {
   private AnimalRepository animalRepository;
 
   @GetMapping
-  public ResponseEntity<Page<Animal>> getUsers(Pageable page) {
+  public ResponseEntity<Page<Animal>> getAnimals(Pageable page) {
     return ResponseEntity.ok(animalRepository.findAll(page));
   }
 }
