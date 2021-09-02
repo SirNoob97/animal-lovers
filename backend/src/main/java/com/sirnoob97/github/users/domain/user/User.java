@@ -1,8 +1,10 @@
 package com.sirnoob97.github.users.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sirnoob97.github.users.domain.animal.Animal;
 import java.util.Map;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,11 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sirnoob97.github.users.domain.animal.Animal;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -62,8 +59,11 @@ public class User {
   @ToString.Exclude
   @JsonIgnoreProperties("users")
   @ManyToMany
-  @JoinTable(name = "users_animals", joinColumns = { @JoinColumn(name = "fk_user") }, inverseJoinColumns = {
-      @JoinColumn(name = "fk_animal") })
+  @JoinTable(
+    name = "users_animals",
+    joinColumns = { @JoinColumn(name = "fk_user") },
+    inverseJoinColumns = { @JoinColumn(name = "fk_animal") }
+  )
   private Set<Animal> animals;
 
   @JsonProperty("name")

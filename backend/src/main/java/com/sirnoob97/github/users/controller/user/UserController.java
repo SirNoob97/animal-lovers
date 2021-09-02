@@ -1,12 +1,11 @@
 package com.sirnoob97.github.users.controller.user;
 
-import java.util.stream.Collectors;
-
 import com.sirnoob97.github.users.domain.animal.AnimalRepository;
 import com.sirnoob97.github.users.domain.user.UserRepository;
 import com.sirnoob97.github.users.dto.UserRequest;
 import com.sirnoob97.github.users.dto.UserResponse;
-
+import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -20,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.AllArgsConstructor;
-
 @AllArgsConstructor
 @RestController
 @RequestMapping("/users")
@@ -32,23 +29,30 @@ public class UserController {
 
   @PostMapping
   public ResponseEntity<Void> newUser(@RequestBody UserRequest userRequest) {
-    var animals = userRequest.getAnimals().stream()
-        .map(a -> animalRepository.findByName(a))
-        .map(o -> o.get())
-        .collect(Collectors.toSet());
+    var animals = userRequest
+      .getAnimals()
+      .stream()
+      .map(a -> animalRepository.findByName(a))
+      .map(o -> o.get())
+      .collect(Collectors.toSet());
 
     userRepository.save(userRequest.mapToUser(animals));
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
   @GetMapping
-  public ResponseEntity<Page<UserResponse>> getUsersByAnimal(@RequestParam(name = "animal") String name, Pageable page){
+  public ResponseEntity<Page<UserResponse>> getUsersByAnimal(
+    @RequestParam(name = "animal") String name,
+    Pageable page
+  ) {
     var animal = animalRepository.findByName(name).get();
-    return ResponseEntity.ok(userRepository.findByAnimalOrderByPoints(animal, page));
+    return ResponseEntity.ok(
+      userRepository.findByAnimalOrderByPoints(animal, page)
+    );
   }
 
   @GetMapping("/points")
-  public ResponseEntity<Page<UserResponse>> getAllSortedPoints(Pageable page){
+  public ResponseEntity<Page<UserResponse>> getAllSortedPoints(Pageable page) {
     return ResponseEntity.ok(userRepository.findAllByOrderByPointsDesc(page));
   }
 

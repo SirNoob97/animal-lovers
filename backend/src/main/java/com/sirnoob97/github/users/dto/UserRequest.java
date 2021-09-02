@@ -1,12 +1,10 @@
 package com.sirnoob97.github.users.dto;
 
-import java.util.Map;
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sirnoob97.github.users.domain.animal.Animal;
 import com.sirnoob97.github.users.domain.user.User;
-
+import java.util.Map;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,7 +31,15 @@ public class UserRequest {
   }
 
   public User mapToUser(Set<Animal> animals) {
-    return User.builder().id(this.id).given(this.given).surname(this.surname).points(this.points)
-        .isActive(this.isActive).age(this.age).animals(animals).build();
+    return User
+      .builder()
+      .id(this.id)
+      .given(this.given)
+      .surname(this.surname)
+      .points(this.points)
+      .isActive(this.isActive)
+      .age(this.age)
+      .animals(animals)
+      .build();
   }
 }

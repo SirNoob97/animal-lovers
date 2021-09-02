@@ -1,7 +1,8 @@
 package com.sirnoob97.github.users.domain.animal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sirnoob97.github.users.domain.user.User;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,10 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sirnoob97.github.users.domain.user.User;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
