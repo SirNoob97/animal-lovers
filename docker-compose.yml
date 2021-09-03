@@ -1,17 +1,17 @@
 services:
-  postgres12:
-    container_name: postgres12
-    hostname: postgres12
-    image: postgres:12-alpine
+  db:
+    container_name: ${POSTGRES_HOSTNAME}
+    hostname: ${POSTGRES_HOSTNAME}
+    image: "postgres:${POSTGRES_TAG}"
     environment:
-      POSTGRES_PASSWORD: 12345
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "127.0.0.1:5432:5432"
+      - "0.0.0.0:${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
-      - postgres12:/var/lib/postgresql/data
+      - postgres:/var/lib/postgresql/data
       - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
 
-  user-service:
+  backend:
     container_name: user-service
     build:
       context: ./backend
@@ -34,4 +34,4 @@ services:
           memory: 170M
 
 volumes:
-  postgres12:
+  postgres:
