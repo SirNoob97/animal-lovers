@@ -10,6 +10,12 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
       - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
 
   backend:
     container_name: user-service
@@ -32,6 +38,9 @@ services:
           memory: 200M
         reservations:
           memory: 170M
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   postgres:
