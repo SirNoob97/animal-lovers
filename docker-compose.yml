@@ -2,9 +2,9 @@ services:
   db:
     container_name: ${POSTGRES_HOSTNAME}
     hostname: ${POSTGRES_HOSTNAME}
-    image: "postgres:${POSTGRES_TAG}"
-    environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    image: "${POSTGRES_IMAGE}"
+    env_file:
+      - ./env/postgresql.env
     ports:
       - "0.0.0.0:${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
@@ -18,17 +18,17 @@ services:
       start_period: 15s
 
   backend:
-    container_name: user-service
+    container_name: ${USER_SERVICE_HOST_NAME}
     build:
       context: ./backend
       dockerfile: ./Dockerfile
-    image: user-service:latest
+    image: ${USER_SERVICE_IMAGE}
     env_file:
       - ./env/postgresql.env
-    hostname: user-service
-    user: user-service
+    hostname: ${USER_SERVICE_HOST_NAME}
+    user: ${USER_SERVICE_HOST_NAME}
     ports:
-      - "127.0.0.1:8080:8080"
+      - "0.0.0.0:${USER_SERVICE_PORT}:${USER_SERVICE_PORT}"
     cap_drop:
       - ALL
     deploy:
