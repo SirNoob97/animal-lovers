@@ -11,5 +11,27 @@ services:
       - postgres12:/var/lib/postgresql/data
       - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
 
+  user-service:
+    container_name: user-service
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    image: user-service:latest
+    env_file:
+      - ./env/postgresql.env
+    hostname: user-service
+    user: user-service
+    ports:
+      - "127.0.0.1:8080:8080"
+    cap_drop:
+      - ALL
+    deploy:
+      mode: global
+      resources:
+        limits:
+          memory: 200M
+        reservations:
+          memory: 170M
+
 volumes:
   postgres12:
