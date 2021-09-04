@@ -1,3 +1,11 @@
+server:
+  port: ${USER_SERVICE_PORT:8080}
+
+client:
+  info:
+    hostname: ${CLIENT_HOST_NAME:localhost}
+    port: ${CLIENT_PORT:3000}
+
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
