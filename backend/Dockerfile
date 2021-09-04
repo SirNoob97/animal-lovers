@@ -1,10 +1,9 @@
 FROM gradle:7.2-jdk11-openj9 AS builder
-ENV DIR=/app
-WORKDIR $DIR
+WORKDIR /app
 COPY ./build.gradle .
 COPY ./settings.gradle .
 COPY ./src ./src
-RUN gradle bootJar -x test --info --scan --stacktrace
+RUN gradle bootJar -x test
 RUN mkdir -p build/dependency && (cd build/dependency; jar -xf ../libs/*.jar)
 
 FROM adoptopenjdk/openjdk11-openj9:x86_64-alpine-jre-11.0.12_7_openj9-0.27.0
