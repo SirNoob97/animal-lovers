@@ -9,8 +9,7 @@ type DeleteProps = {
   deletedUsers: number[];
 };
 
-const url =
-  (Envs.BACKEND_URL || Envs.DEFAULT_BACKEND_URL) + Envs.USERS_ENDPOINT;
+const url = Envs.BACKEND_URL + Envs.USERS_ENDPOINT;
 
 const DeleteUser: React.FC<DeleteProps> = ({
   buttonState,

@@ -4,8 +4,7 @@ import Animal from './Animal';
 import axios from 'axios';
 import Envs from '../util/Envs';
 
-const url =
-  (Envs.BACKEND_URL || Envs.DEFAULT_BACKEND_URL) + Envs.ANIMALS_ENDPOINT;
+const url = Envs.BACKEND_URL + Envs.ANIMALS_ENDPOINT;
 
 const Dropdown: React.FC = () => {
   console.log(url);

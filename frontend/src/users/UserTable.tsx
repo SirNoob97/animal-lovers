@@ -8,8 +8,7 @@ import Envs from '../util/Envs';
 import axios from 'axios';
 
 const UserTable: React.FC = () => {
-  const url =
-    (Envs.BACKEND_URL || Envs.DEFAULT_BACKEND_URL) + Envs.USERS_ENDPOINT;
+  const url = Envs.BACKEND_URL + Envs.USERS_ENDPOINT;
   let urlRequest = '';
   const { animal } = useParams() as {
     animal: string;

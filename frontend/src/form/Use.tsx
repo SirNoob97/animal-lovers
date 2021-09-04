@@ -5,8 +5,7 @@ import UserErrors from './UserErrors';
 import Envs from '../util/Envs';
 import axios from 'axios';
 
-const url: string =
-  (Envs.BACKEND_URL || Envs.DEFAULT_BACKEND_URL) + Envs.USERS_ENDPOINT;
+const url: string = Envs.BACKEND_URL + Envs.USERS_ENDPOINT;
 
 const emptyUser = (): User => {
   const user = new User();
