@@ -6,10 +6,12 @@ services:
     env_file:
       - ./env/postgresql.env
     ports:
-      - "0.0.0.0:${POSTGRES_PORT}:${POSTGRES_PORT}"
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
       - postgres:/var/lib/postgresql/data
       - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
+    networks:
+      animal-lovers:
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 20s
@@ -25,10 +27,14 @@ services:
     image: ${USER_SERVICE_IMAGE}
     env_file:
       - ./env/postgresql.env
+    environment:
+      CLIENT_HOST_NAME: ${ANIMAL_LOVERS_HOST_NAME}
+      CLIENT_PORT: ${ANIMAL_LOVERS_PORT}
+      USER_SERVICE_PORT: ${USER_SERVICE_PORT}
     hostname: ${USER_SERVICE_HOST_NAME}
     user: ${USER_SERVICE_HOST_NAME}
     ports:
-      - "0.0.0.0:${USER_SERVICE_PORT}:${USER_SERVICE_PORT}"
+      - "${USER_SERVICE_EXTERNAL_PORT}:${USER_SERVICE_PORT}"
     cap_drop:
       - ALL
     deploy:
@@ -38,9 +44,38 @@ services:
           memory: 200M
         reservations:
           memory: 170M
+    networks:
+      animal-lovers:
     depends_on:
       db:
         condition: service_healthy
 
+  frontend:
+    container_name: ${ANIMAL_LOVERS_HOST_NAME}
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+      args:
+        USER_SERVICE_HOST_NAME: ${USER_SERVICE_HOST_NAME}
+        USER_SERVICE_PORT: ${USER_SERVICE_PORT}
+    image: ${ANIMAL_LOVERS_IMAGE}
+    environment:
+      NGINX_HOST: ${ANIMAL_LOVERS_HOST_NAME}
+      NGINX_PORT: ${ANIMAL_LOVERS_PORT}
+    hostname: ${ANIMAL_LOVERS_HOST_NAME} 
+    ports:
+      - "0.0.0.0:${ANIMAL_LOVERS_EXTERNAL_PORT}:${ANIMAL_LOVERS_PORT}"
+    networks:
+      animal-lovers:
+    depends_on:
+      db:
+        condition: service_healthy
+      backend:
+        condition: service_started
+
 volumes:
   postgres:
+
+networks:
+  animal-lovers:
+    driver: bridge
