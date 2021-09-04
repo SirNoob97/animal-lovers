@@ -31,6 +31,7 @@ services:
       CLIENT_HOST_NAME: ${ANIMAL_LOVERS_HOST_NAME}
       CLIENT_PORT: ${ANIMAL_LOVERS_PORT}
       USER_SERVICE_PORT: ${USER_SERVICE_PORT}
+      API_PREFIX: ${API_PREFIX}
     hostname: ${USER_SERVICE_HOST_NAME}
     user: ${USER_SERVICE_HOST_NAME}
     ports:
@@ -58,15 +59,20 @@ services:
       args:
         USER_SERVICE_HOST_NAME: ${USER_SERVICE_HOST_NAME}
         USER_SERVICE_PORT: ${USER_SERVICE_PORT}
+        API_PREFIX: ${API_PREFIX}
     image: ${ANIMAL_LOVERS_IMAGE}
     environment:
       NGINX_HOST: ${ANIMAL_LOVERS_HOST_NAME}
       NGINX_PORT: ${ANIMAL_LOVERS_PORT}
+      BACKEND_URL: http://${USER_SERVICE_HOST_NAME}:${USER_SERVICE_PORT}${API_PREFIX}
     hostname: ${ANIMAL_LOVERS_HOST_NAME} 
     ports:
       - "0.0.0.0:${ANIMAL_LOVERS_EXTERNAL_PORT}:${ANIMAL_LOVERS_PORT}"
     networks:
       animal-lovers:
+    volumes:
+      - ./nginx/default.conf.template:/etc/nginx/default.conf.template:ro
+    command: /bin/sh -c "envsubst < /etc/nginx/default.conf.template > /etc/nginx/conf.d/default.conf && exec nginx -g 'daemon off;'"
     depends_on:
       db:
         condition: service_healthy
