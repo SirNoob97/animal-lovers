@@ -1,7 +1,7 @@
 server:
   port: ${USER_SERVICE_PORT:8080}
   servlet:
-    context-path: /apiV1
+    context-path: ${API_PREFIX:/apiV1}
 
 client:
   info:
