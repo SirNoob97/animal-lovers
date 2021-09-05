@@ -5,8 +5,6 @@ services:
     image: "${POSTGRES_IMAGE}"
     env_file:
       - ./env/postgresql.env
-    ports:
-      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     volumes:
       - postgres:/var/lib/postgresql/data
       - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d:ro
@@ -30,12 +28,11 @@ services:
     environment:
       CLIENT_HOST_NAME: ${ANIMAL_LOVERS_HOST_NAME}
       CLIENT_PORT: ${ANIMAL_LOVERS_PORT}
-      USER_SERVICE_PORT: ${USER_SERVICE_PORT}
+      SERVICE_HOST_NAME: ${USER_SERVICE_HOST_NAME}
+      SERVICE_PORT: ${USER_SERVICE_PORT}
       API_PREFIX: ${API_PREFIX}
     hostname: ${USER_SERVICE_HOST_NAME}
     user: ${USER_SERVICE_HOST_NAME}
-    ports:
-      - "${USER_SERVICE_EXTERNAL_PORT}:${USER_SERVICE_PORT}"
     cap_drop:
       - ALL
     deploy:
