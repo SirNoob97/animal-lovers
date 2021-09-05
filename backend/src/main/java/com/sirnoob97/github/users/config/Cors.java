@@ -11,12 +11,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class Cors implements WebMvcConfigurer {
 
-  @Value(value = "${spring.application.name}")
-  public String serverName;
-
-  @Value(value = "${server.port}")
-  public int serverPort;
-
   @Value(value = "${client.info.hostname}")
   public String clientHostname;
 
@@ -28,14 +22,13 @@ public class Cors implements WebMvcConfigurer {
     var origins =
         new String[] {
           String.format("http://%s:%s", clientHostname, clientPort),
-          String.format("http://%s:%s", serverName, serverPort),
           "http://localhost",
           "http://localhost:3000"
         };
 
     registry
         .addMapping("/**")
-        .allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.DELETE.name())
+        .allowedMethods("*")
         .allowedHeaders("*")
         .allowedOrigins(origins)
         .maxAge(3600L);
