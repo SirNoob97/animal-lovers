@@ -1,5 +1,5 @@
 server:
-  port: ${USER_SERVICE_PORT:8080}
+  port: ${SERVICE_PORT:8080}
   servlet:
     context-path: ${API_PREFIX:/apiV1}
 
@@ -9,6 +9,8 @@ client:
     port: ${CLIENT_PORT:3000}
 
 spring:
+  application:
+    name: ${SERVICE_HOST_NAME:user-service}
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://${POSTGRES_HOSTNAME:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:animal_lovers}
