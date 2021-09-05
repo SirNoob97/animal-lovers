@@ -4,10 +4,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
+@EnableWebMvc
 public class Cors implements WebMvcConfigurer {
+
+  @Value(value = "${spring.application.name}")
+  public String serverName;
+
+  @Value(value = "${server.port}")
+  public int serverPort;
 
   @Value(value = "${client.info.hostname}")
   public String clientHostname;
@@ -17,13 +25,19 @@ public class Cors implements WebMvcConfigurer {
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {
+    var origins =
+        new String[] {
+          String.format("http://%s:%s", clientHostname, clientPort),
+          String.format("http://%s:%s", serverName, serverPort),
+          "http://localhost",
+          "http://localhost:3000"
+        };
+
     registry
         .addMapping("/**")
         .allowedMethods(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.DELETE.name())
         .allowedHeaders("*")
-        .allowedOrigins(
-            String.format("http://%s:%s", clientHostname, clientPort),
-            "http://localhost",
-            "http://localhost:3000");
+        .allowedOrigins(origins)
+        .maxAge(3600L);
   }
 }
