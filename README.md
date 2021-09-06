@@ -2,7 +2,6 @@
 
 ## Prerequisites
 
-- Docker Engine 19.03.0+ and Docker Compose 1.27.0+.
 - Java 11+.
 - NodeJS 14.17.5+.
 
