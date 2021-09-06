@@ -8,6 +8,10 @@
 
 ## Commands
 
-- [sudo] docker-compose up -d
-- [mvn | ./mvnw | mvnw.cmd] spring-boot:run (depends of OS)
-- yarn run start
+Inside backend directory:
+
+    gradle booRun
+
+Inside frontend directory:
+
+    yarn run start
