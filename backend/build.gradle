@@ -32,4 +32,10 @@ dependencies {
 
 test {
   useJUnitPlatform()
+//  debugOptions {
+//    enabled = true
+//    port = 5005
+//    server = true
+//    suspend = true
+//  }
 }
