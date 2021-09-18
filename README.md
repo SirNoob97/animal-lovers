@@ -4,13 +4,15 @@
 
 - Java 11+.
 - NodeJS 14.17.5+.
+- Docker engine 20.10.x
+- Docker compose 1.26+
 
-## Commands
+## Usage
 
-Inside backend directory:
+Run the entire project wit docker compose and go to ```http://localhost```.
 
-    gradle booRun
+    dkc --env-file ./env/.env.dev up -d
 
-Inside frontend directory:
+If you want to use gradel and yarn to run the projects add the following to the ```package.json```.
 
-    yarn run start
+    "proxy": "http://localhost:8080/apiV1"
