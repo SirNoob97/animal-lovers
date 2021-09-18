@@ -8,8 +8,6 @@ import Envs from '../util/Envs';
 import axios from 'axios';
 
 const UserTable: React.FC = () => {
-  const url = Envs.BACKEND_URL + Envs.USERS_ENDPOINT;
-  let urlRequest = '';
   const { animal } = useParams() as {
     animal: string;
   };
@@ -23,10 +21,12 @@ const UserTable: React.FC = () => {
   const animalParam = `?animal=${animal}&${page}`;
   const points = `/points?${page}`;
 
+  let urlRequest = '';
+
   if ({ animal }.animal && { animal }.animal.length > 0) {
-    urlRequest = url + animalParam;
+    urlRequest = Envs.USERS_ENDPOINT + animalParam;
   } else {
-    urlRequest = url + points;
+    urlRequest = Envs.USERS_ENDPOINT + points;
   }
 
   const changePageNumber = (num: number) => {

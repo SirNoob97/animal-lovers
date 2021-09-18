@@ -11,12 +11,9 @@ interface Variables {
 
 const Envs: Variables = {
   BACKEND_URL: `http://${env.REACT_APP_BACKEND_HOST_NAME || 'localhost'}:${
-    env.REACT_APP_BACKEND_PORT || 8080
-  }${env.REACT_APP_BAKCEND_API_PREFIX || '/apiV1'}`,
-  USERS_ENDPOINT: `${env.REACT_APP_BACKEND_USERS_ENDPOINT}`,
-  ANIMALS_ENDPOINT: `${env.REACT_APP_BACKEND_ANIMALS_ENDPOINT}`,
+    env.REACT_APP_BACKEND_PORT || 8080}`,
+  USERS_ENDPOINT: `${env.REACT_APP_BAKCEND_API_PREFIX || '/apiV1'}${env.REACT_APP_BACKEND_USERS_ENDPOINT}`,
+  ANIMALS_ENDPOINT: `${env.REACT_APP_BAKCEND_API_PREFIX || '/apiV1'}${env.REACT_APP_BACKEND_ANIMALS_ENDPOINT}`,
 };
-
-console.log(Envs);
 
 export default Envs;

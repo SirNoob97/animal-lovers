@@ -9,15 +9,13 @@ type DeleteProps = {
   deletedUsers: number[];
 };
 
-const url = Envs.BACKEND_URL + Envs.USERS_ENDPOINT;
-
 const DeleteUser: React.FC<DeleteProps> = ({
   buttonState,
   changeButtonState,
   id,
   deletedUsers,
 }) => {
-  let endpoint = `${url}/${id}`;
+  let endpoint = `${Envs.USERS_ENDPOINT}/${id}`;
 
   const request = async () => {
     const res = await axios.delete(endpoint);

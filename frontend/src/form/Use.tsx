@@ -5,8 +5,6 @@ import UserErrors from './UserErrors';
 import Envs from '../util/Envs';
 import axios from 'axios';
 
-const url: string = Envs.BACKEND_URL + Envs.USERS_ENDPOINT;
-
 const emptyUser = (): User => {
   const user = new User();
   user.name = new UserName();
@@ -54,7 +52,7 @@ const useForm = (callback: () => void, validate: (u: User) => UserErrors) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await axios.post(url, user);
+      const res = await axios.post(Envs.USERS_ENDPOINT, user);
       if (res.status >= 200 && res.status < 400) {
         callback();
       }
